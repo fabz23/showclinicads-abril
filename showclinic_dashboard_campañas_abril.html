@@ -1,0 +1,682 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Styrene+A:wght@400;500;700&family=Tiempos+Text:ital,wght@0,400;0,500;1,400&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@600;700&display=swap');
+
+*{margin:0;padding:0;box-sizing:border-box;}
+
+:root {
+  --bg: #f7f6f3;
+  --surface: #ffffff;
+  --card: #ffffff;
+  --border: #e8e5e0;
+  --border-light: #f0ede8;
+  --text: #1a1a1a;
+  --muted: #7a7570;
+  --accent: #c17f3a;
+  --accent-light: #f5ead9;
+  --teal: #2a7a7a;
+  --teal-light: #d8f0f0;
+  --rose: #b54a5a;
+  --rose-light: #fce8eb;
+  --green: #2e7d5a;
+  --green-light: #d8f0e4;
+  --purple: #6b4fa0;
+  --purple-light: #ede8f8;
+  --shadow: 0 1px 3px rgba(0,0,0,0.06), 0 4px 16px rgba(0,0,0,0.04);
+  --shadow-hover: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+body {
+  font-family: 'Inter', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+  padding: 28px 24px;
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+/* HEADER */
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 28px;
+  padding-bottom: 20px;
+  border-bottom: 2px solid var(--border);
+}
+.brand h1 {
+  font-family: 'Playfair Display', serif;
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--text);
+  letter-spacing: -0.3px;
+}
+.brand p {
+  font-size: 12px;
+  color: var(--muted);
+  margin-top: 3px;
+  font-weight: 400;
+}
+.period {
+  text-align: right;
+  background: var(--accent-light);
+  border-radius: 8px;
+  padding: 8px 14px;
+  border: 1px solid #e8d4bb;
+}
+.period span { display: block; font-size: 10px; color: var(--accent); font-weight: 600; text-transform: uppercase; letter-spacing: 0.6px; }
+.period strong { font-size: 13px; color: var(--text); font-weight: 600; }
+
+/* TABS */
+.tabs {
+  display: flex;
+  gap: 4px;
+  margin-bottom: 20px;
+  background: var(--surface);
+  border-radius: 10px;
+  padding: 4px;
+  box-shadow: var(--shadow);
+  width: fit-content;
+}
+.tab {
+  padding: 8px 18px;
+  border-radius: 7px;
+  border: none;
+  background: transparent;
+  font-family: 'Inter', sans-serif;
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--muted);
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.tab:hover { color: var(--text); background: var(--border-light); }
+.tab.active { background: var(--text); color: white; }
+.tab.tab-cyber.active { background: var(--teal); }
+.tab.tab-fin.active { background: var(--green); }
+
+/* SECTION */
+.section { display: none; }
+.section.active { display: block; }
+
+/* CAMPAIGN HEADER CARD */
+.camp-header {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: center;
+  background: var(--surface);
+  border-radius: 12px;
+  padding: 18px 22px;
+  margin-bottom: 16px;
+  box-shadow: var(--shadow);
+  border-left: 4px solid var(--accent);
+}
+.camp-header.cyber { border-left-color: var(--teal); }
+.camp-header.fin { border-left-color: var(--green); }
+.camp-name { font-size: 16px; font-weight: 700; color: var(--text); }
+.camp-sub { font-size: 11px; color: var(--muted); margin-top: 2px; }
+.camp-badge {
+  background: var(--accent-light);
+  color: var(--accent);
+  border-radius: 20px;
+  padding: 4px 12px;
+  font-size: 11px;
+  font-weight: 600;
+}
+.camp-header.cyber .camp-badge { background: var(--teal-light); color: var(--teal); }
+.camp-header.fin .camp-badge { background: var(--green-light); color: var(--green); }
+
+/* KPI GRID */
+.kpi-row {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 10px;
+  margin-bottom: 16px;
+}
+.kpi {
+  background: var(--surface);
+  border-radius: 10px;
+  padding: 14px 16px;
+  box-shadow: var(--shadow);
+  border: 1px solid var(--border-light);
+  transition: box-shadow 0.2s;
+}
+.kpi:hover { box-shadow: var(--shadow-hover); }
+.kpi label {
+  font-size: 10px;
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 0.7px;
+  display: block;
+  margin-bottom: 8px;
+  font-weight: 500;
+}
+.kpi .val {
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--text);
+  line-height: 1;
+}
+.kpi .sub { font-size: 10px; color: var(--muted); margin-top: 4px; }
+.kpi.highlight .val { color: var(--accent); }
+.kpi.good .val { color: var(--green); }
+.kpi.warn .val { color: var(--rose); }
+.kpi.info .val { color: var(--teal); }
+.kpi.highlight-teal .val { color: var(--teal); }
+.kpi.highlight-green .val { color: var(--green); }
+
+/* GRID */
+.grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 14px; }
+.grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 14px; margin-bottom: 14px; }
+
+/* PANEL */
+.panel {
+  background: var(--surface);
+  border-radius: 12px;
+  padding: 18px;
+  box-shadow: var(--shadow);
+  border: 1px solid var(--border-light);
+}
+.panel-title {
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  color: var(--muted);
+  margin-bottom: 14px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.panel-title::before {
+  content: '';
+  width: 3px;
+  height: 12px;
+  border-radius: 2px;
+  background: var(--accent);
+  display: inline-block;
+}
+.panel.cyber .panel-title::before { background: var(--teal); }
+.panel.fin .panel-title::before { background: var(--green); }
+
+/* BAR CHART */
+.bar-row { display: flex; align-items: center; gap: 10px; margin-bottom: 9px; }
+.bar-label { width: 170px; font-size: 11.5px; color: var(--text); flex-shrink: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.bar-track { flex: 1; height: 7px; background: var(--bg); border-radius: 4px; overflow: hidden; }
+.bar-fill { height: 100%; border-radius: 4px; }
+.bar-val { font-size: 11px; font-weight: 600; width: 50px; text-align: right; flex-shrink: 0; }
+
+/* TABLE */
+.data-table { width: 100%; border-collapse: collapse; }
+.data-table th { text-align: left; font-size: 10px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.5px; padding: 0 8px 8px; border-bottom: 1px solid var(--border); font-weight: 600; }
+.data-table th:not(:first-child) { text-align: right; }
+.data-table td { padding: 7px 8px; font-size: 12px; border-bottom: 1px solid var(--border-light); }
+.data-table td:not(:first-child) { text-align: right; font-variant-numeric: tabular-nums; }
+.data-table tr:last-child td { border-bottom: none; }
+.data-table .best { color: var(--green); font-weight: 600; }
+.data-table .worst { color: var(--rose); }
+.data-table tr:hover td { background: var(--bg); }
+
+/* INSIGHTS */
+.insight {
+  border-radius: 8px;
+  padding: 10px 12px;
+  margin-bottom: 8px;
+  font-size: 12px;
+  line-height: 1.5;
+  border: 1px solid transparent;
+}
+.insight strong { display: block; font-size: 11px; font-weight: 700; margin-bottom: 2px; text-transform: uppercase; letter-spacing: 0.4px; }
+.insight.good { background: var(--green-light); border-color: #b8e4cc; }
+.insight.good strong { color: var(--green); }
+.insight.warn { background: var(--rose-light); border-color: #f0c4cc; }
+.insight.warn strong { color: var(--rose); }
+.insight.note { background: var(--accent-light); border-color: #e8d4bb; }
+.insight.note strong { color: var(--accent); }
+.insight.info { background: var(--teal-light); border-color: #b0dede; }
+.insight.info strong { color: var(--teal); }
+
+/* TAG */
+.tag {
+  display: inline-block;
+  padding: 1px 7px;
+  border-radius: 4px;
+  font-size: 10px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+}
+.tag-best { background: var(--green-light); color: var(--green); }
+.tag-warn { background: var(--rose-light); color: var(--rose); }
+.tag-info { background: var(--teal-light); color: var(--teal); }
+.tag-neutral { background: #f0ede8; color: var(--muted); }
+
+/* OVERVIEW COMPARE */
+.compare-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-bottom: 16px; }
+.camp-card {
+  background: var(--surface);
+  border-radius: 12px;
+  padding: 18px;
+  box-shadow: var(--shadow);
+  border: 1px solid var(--border-light);
+  border-top: 3px solid var(--accent);
+  cursor: pointer;
+  transition: box-shadow 0.2s, transform 0.1s;
+}
+.camp-card.cyber { border-top-color: var(--teal); }
+.camp-card.fin { border-top-color: var(--green); }
+.camp-card:hover { box-shadow: var(--shadow-hover); transform: translateY(-1px); }
+.camp-card h3 { font-size: 12px; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: 0.6px; margin-bottom: 10px; }
+.camp-card .big { font-size: 28px; font-weight: 700; color: var(--text); line-height: 1; }
+.camp-card .camp-sub { font-size: 11px; color: var(--muted); margin-top: 3px; margin-bottom: 12px; }
+.camp-card .metrics { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+.camp-card .m-item label { font-size: 9px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.4px; display: block; }
+.camp-card .m-item span { font-size: 13px; font-weight: 600; }
+.cpr-good { color: var(--green); }
+.cpr-mid { color: var(--accent); }
+.cpr-high { color: var(--rose); }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="brand">
+    <h1>Showclinic · Informe de Campañas</h1>
+    <p>Análisis de rendimiento · Abril 1–29, 2026</p>
+  </div>
+  <div class="period">
+    <span>Período</span>
+    <strong>Abril 2026</strong>
+  </div>
+</div>
+
+<!-- TABS -->
+<div class="tabs">
+  <button class="tab active" onclick="showTab('overview')">📊 Vista General</button>
+  <button class="tab" onclick="showTab('abril')">Campaña Abril</button>
+  <button class="tab tab-cyber" onclick="showTab('cyber')">CyberWow</button>
+  <button class="tab tab-fin" onclick="showTab('fin')">Final de Mes</button>
+</div>
+
+<!-- ===== OVERVIEW ===== -->
+<div class="section active" id="tab-overview">
+
+  <div class="compare-grid">
+    <div class="camp-card" onclick="showTab('abril')">
+      <h3>Campaña Abril</h3>
+      <div class="big">400</div>
+      <div class="camp-sub">conversaciones</div>
+      <div class="metrics">
+        <div class="m-item"><label>CPR</label><span class="cpr-mid">S/3.88</span></div>
+        <div class="m-item"><label>Gasto</label><span>S/1,554</span></div>
+        <div class="m-item"><label>Impresiones</label><span>123.9K</span></div>
+        <div class="m-item"><label>CTR</label><span>2.26%</span></div>
+      </div>
+    </div>
+    <div class="camp-card cyber" onclick="showTab('cyber')">
+      <h3>CyberWow Abril</h3>
+      <div class="big" style="color:var(--teal)">142</div>
+      <div class="camp-sub">conversaciones</div>
+      <div class="metrics">
+        <div class="m-item"><label>CPR</label><span class="cpr-good">S/3.39</span></div>
+        <div class="m-item"><label>Gasto</label><span>S/482</span></div>
+        <div class="m-item"><label>Impresiones</label><span>31.7K</span></div>
+        <div class="m-item"><label>CTR</label><span>2.44%</span></div>
+      </div>
+    </div>
+    <div class="camp-card fin" onclick="showTab('fin')">
+      <h3>Final de Mes</h3>
+      <div class="big" style="color:var(--green)">154</div>
+      <div class="camp-sub">conversaciones</div>
+      <div class="metrics">
+        <div class="m-item"><label>CPR</label><span class="cpr-good">S/2.08</span></div>
+        <div class="m-item"><label>Gasto</label><span>S/320</span></div>
+        <div class="m-item"><label>Impresiones</label><span>30.9K</span></div>
+        <div class="m-item"><label>CTR</label><span>2.93%</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Summary table -->
+  <div class="panel" style="margin-bottom:14px">
+    <div class="panel-title">Comparativa de eficiencia entre campañas</div>
+    <table class="data-table">
+      <thead>
+        <tr>
+          <th>Campaña</th>
+          <th>Conversaciones</th>
+          <th>Gasto (S/)</th>
+          <th>CPR</th>
+          <th>Impresiones</th>
+          <th>CTR</th>
+          <th>Eficiencia</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Final de Mes</strong></td>
+          <td>154</td>
+          <td>319.98</td>
+          <td class="best">S/2.08</td>
+          <td>30,879</td>
+          <td>2.93%</td>
+          <td><span class="tag tag-best">★ Mejor</span></td>
+        </tr>
+        <tr>
+          <td><strong>CyberWow</strong></td>
+          <td>142</td>
+          <td>482.05</td>
+          <td style="color:var(--accent);font-weight:600">S/3.39</td>
+          <td>31,662</td>
+          <td>2.44%</td>
+          <td><span class="tag tag-info">Buena</span></td>
+        </tr>
+        <tr>
+          <td><strong>Campaña Abril</strong></td>
+          <td>400</td>
+          <td>1,553.63</td>
+          <td class="worst">S/3.88</td>
+          <td>123,895</td>
+          <td>2.26%</td>
+          <td><span class="tag tag-neutral">Mayor volumen</span></td>
+        </tr>
+        <tr style="background:var(--bg);font-weight:600">
+          <td><strong>TOTAL</strong></td>
+          <td><strong>696</strong></td>
+          <td><strong>2,355.66</strong></td>
+          <td><strong>S/3.38</strong></td>
+          <td><strong>186,436</strong></td>
+          <td><strong>2.45%</strong></td>
+          <td></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="grid-2">
+    <div class="panel">
+      <div class="panel-title">CPR por campaña (S/ menor = mejor)</div>
+      <div class="bar-row">
+        <div class="bar-label">Final de Mes</div>
+        <div class="bar-track"><div class="bar-fill" style="width:54%;background:var(--green)"></div></div>
+        <div class="bar-val" style="color:var(--green)">S/2.08</div>
+      </div>
+      <div class="bar-row">
+        <div class="bar-label">CyberWow</div>
+        <div class="bar-track"><div class="bar-fill" style="width:87%;background:var(--teal)"></div></div>
+        <div class="bar-val" style="color:var(--teal)">S/3.39</div>
+      </div>
+      <div class="bar-row">
+        <div class="bar-label">Campaña Abril</div>
+        <div class="bar-track"><div class="bar-fill" style="width:100%;background:var(--accent)"></div></div>
+        <div class="bar-val" style="color:var(--accent)">S/3.88</div>
+      </div>
+    </div>
+    <div class="panel">
+      <div class="panel-title">Insights generales</div>
+      <div class="insight good"><strong>✅ Final de Mes = ROI más alto</strong>S/2.08 CPR con 154 conversaciones. El creativo de Mini Armonización antes/después fue el ganador absoluto del mes.</div>
+      <div class="insight note"><strong>💡 CyberWow mejoró el CPR vs Campaña Abril</strong>El descuento temporal funcionó — el CTR más alto (2.44%) confirma que el copy de oferta enganchó mejor.</div>
+      <div class="insight warn"><strong>⚠️ Campaña Abril tiene el CPR más alto</strong>Pero también el mayor volumen. Es la base de aprendizaje del algoritmo para las otras dos.</div>
+    </div>
+  </div>
+
+</div>
+
+<!-- ===== CAMPAÑA ABRIL ===== -->
+<div class="section" id="tab-abril">
+  <div class="camp-header">
+    <div>
+      <div class="camp-name">Campaña Abril</div>
+      <div class="camp-sub">Campaña principal del mes · Servicios con 15-20% descuento</div>
+    </div>
+    <div class="camp-badge">Más volumen</div>
+  </div>
+
+  <div class="kpi-row">
+    <div class="kpi highlight"><label>Conversaciones</label><div class="val">400</div><div class="sub">mensajes WA</div></div>
+    <div class="kpi good"><label>Costo/conv.</label><div class="val">S/3.88</div><div class="sub">por mensaje</div></div>
+    <div class="kpi info"><label>Gasto total</label><div class="val">S/1,554</div><div class="sub">invertido</div></div>
+    <div class="kpi"><label>Impresiones</label><div class="val">123.9K</div><div class="sub">alcance</div></div>
+    <div class="kpi"><label>CTR</label><div class="val">2.26%</div><div class="sub">clics/impresiones</div></div>
+  </div>
+
+  <div class="grid-2">
+    <div class="panel">
+      <div class="panel-title">Conversaciones por anuncio (mujeres)</div>
+      <div class="bar-row">
+        <div class="bar-label">Mini Arm. VIDEO</div>
+        <div class="bar-track"><div class="bar-fill" style="width:100%;background:var(--accent)"></div></div>
+        <div class="bar-val" style="color:var(--accent)">~133</div>
+      </div>
+      <div class="bar-row">
+        <div class="bar-label">Mini Arm. IMAGEN</div>
+        <div class="bar-track"><div class="bar-fill" style="width:73%;background:var(--purple)"></div></div>
+        <div class="bar-val" style="color:var(--purple)">~97</div>
+      </div>
+      <div class="bar-row">
+        <div class="bar-label">Botox VIDEO</div>
+        <div class="bar-track"><div class="bar-fill" style="width:55%;background:var(--teal)"></div></div>
+        <div class="bar-val" style="color:var(--teal)">~73</div>
+      </div>
+      <div class="bar-row">
+        <div class="bar-label">Labios VIDEO</div>
+        <div class="bar-track"><div class="bar-fill" style="width:40%;background:var(--rose)"></div></div>
+        <div class="bar-val" style="color:var(--rose)">~54</div>
+      </div>
+      <div class="bar-row">
+        <div class="bar-label">Botox IMAGEN</div>
+        <div class="bar-track"><div class="bar-fill" style="width:32%;background:#60a5fa"></div></div>
+        <div class="bar-val" style="color:#60a5fa">~42</div>
+      </div>
+      <div class="bar-row">
+        <div class="bar-label">Labios IMAGEN</div>
+        <div class="bar-track"><div class="bar-fill" style="width:18%;background:var(--green)"></div></div>
+        <div class="bar-val" style="color:var(--green)">~24</div>
+      </div>
+      <div class="bar-row">
+        <div class="bar-label">Bioestimuladores</div>
+        <div class="bar-track"><div class="bar-fill" style="width:10%;background:var(--muted)"></div></div>
+        <div class="bar-val" style="color:var(--muted)">~25</div>
+      </div>
+    </div>
+
+    <div class="panel">
+      <div class="panel-title">CPR por edad (mujeres)</div>
+      <table class="data-table">
+        <thead><tr><th>Edad</th><th>Conv.</th><th>CPR</th><th></th></tr></thead>
+        <tbody>
+          <tr><td>65+</td><td>17</td><td class="best">S/2.87</td><td><span class="tag tag-best">Top</span></td></tr>
+          <tr><td>55–64</td><td>31</td><td class="best">S/2.90</td><td><span class="tag tag-best">Top</span></td></tr>
+          <tr><td>18–24</td><td>50</td><td class="best">S/2.93</td><td><span class="tag tag-best">Top</span></td></tr>
+          <tr><td>45–54</td><td>50</td><td>S/3.79</td><td><span class="tag tag-neutral">Buena</span></td></tr>
+          <tr><td>25–34</td><td>132</td><td>S/3.85</td><td><span class="tag tag-neutral">Volumen</span></td></tr>
+          <tr><td>35–44</td><td>69</td><td class="worst">S/5.08</td><td><span class="tag tag-warn">Caro</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="panel">
+    <div class="panel-title">Insights · Campaña Abril</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+      <div class="insight good"><strong>✅ Video supera imagen en todos los servicios</strong>Mini Armonización VIDEO generó 37% más conversiones que la imagen del mismo servicio. Siempre priorizar video.</div>
+      <div class="insight warn"><strong>⚠️ 35–44 es el rango más caro</strong>S/5.08 CPR — 74% más caro que 18–24. En Mayo, considera excluir este rango o reducir exposición.</div>
+      <div class="insight note"><strong>💡 Bioestimuladores al 15% no funcionó</strong>Solo ~25 conversiones vs 150+ de Mini Armonización. El descuento del 15% es insuficiente — el mercado no percibe valor frente a 20%.</div>
+      <div class="insight good"><strong>✅ 65+ sorprende con el CPR más bajo</strong>S/2.87 — la audiencia senior es eficiente y está infraexplotada. Vale la pena un ad set dedicado.</div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== CYBER ===== -->
+<div class="section" id="tab-cyber">
+  <div class="camp-header cyber">
+    <div>
+      <div class="camp-name">CyberWow Abril 2026</div>
+      <div class="camp-sub">Campaña de descuentos CyberWow · Múltiples servicios</div>
+    </div>
+    <div class="camp-badge">Mejor CTR</div>
+  </div>
+
+  <div class="kpi-row">
+    <div class="kpi highlight-teal"><label>Conversaciones</label><div class="val">142</div><div class="sub">mensajes WA</div></div>
+    <div class="kpi good"><label>Costo/conv.</label><div class="val">S/3.39</div><div class="sub">por mensaje</div></div>
+    <div class="kpi info"><label>Gasto total</label><div class="val">S/482</div><div class="sub">invertido</div></div>
+    <div class="kpi"><label>Impresiones</label><div class="val">31.7K</div><div class="sub">alcance</div></div>
+    <div class="kpi"><label>CTR</label><div class="val">2.44%</div><div class="sub">el más alto</div></div>
+  </div>
+
+  <div class="grid-2">
+    <div class="panel cyber">
+      <div class="panel-title">Servicios con más conversiones</div>
+      <div class="bar-row">
+        <div class="bar-label">Mini Arm. VIDEO</div>
+        <div class="bar-track"><div class="bar-fill" style="width:100%;background:var(--teal)"></div></div>
+        <div class="bar-val" style="color:var(--teal)">~35</div>
+      </div>
+      <div class="bar-row">
+        <div class="bar-label">Paquete Reductor</div>
+        <div class="bar-track"><div class="bar-fill" style="width:74%;background:var(--accent)"></div></div>
+        <div class="bar-val" style="color:var(--accent)">~26</div>
+      </div>
+      <div class="bar-row">
+        <div class="bar-label">HIFU</div>
+        <div class="bar-track"><div class="bar-fill" style="width:60%;background:var(--rose)"></div></div>
+        <div class="bar-val" style="color:var(--rose)">~21</div>
+      </div>
+      <div class="bar-row">
+        <div class="bar-label">Mini Arm. IMAGEN</div>
+        <div class="bar-track"><div class="bar-fill" style="width:46%;background:var(--purple)"></div></div>
+        <div class="bar-val" style="color:var(--purple)">~16</div>
+      </div>
+      <div class="bar-row">
+        <div class="bar-label">Rinomodelación</div>
+        <div class="bar-track"><div class="bar-fill" style="width:37%;background:#60a5fa"></div></div>
+        <div class="bar-val" style="color:#60a5fa">~13</div>
+      </div>
+      <div class="bar-row">
+        <div class="bar-label">Limpieza Facial</div>
+        <div class="bar-track"><div class="bar-fill" style="width:29%;background:var(--green)"></div></div>
+        <div class="bar-val" style="color:var(--green)">~10</div>
+      </div>
+    </div>
+
+    <div class="panel cyber">
+      <div class="panel-title">CPR por edad (mujeres)</div>
+      <table class="data-table">
+        <thead><tr><th>Edad</th><th>Conv.</th><th>CPR</th><th></th></tr></thead>
+        <tbody>
+          <tr><td>65+</td><td>6</td><td class="best">S/2.80</td><td><span class="tag tag-best">Top</span></td></tr>
+          <tr><td>18–24</td><td>21</td><td class="best">S/2.22</td><td><span class="tag tag-best">Top</span></td></tr>
+          <tr><td>45–54</td><td>18</td><td>S/3.75</td><td><span class="tag tag-neutral">Buena</span></td></tr>
+          <tr><td>25–34</td><td>46</td><td>S/3.54</td><td><span class="tag tag-neutral">Volumen</span></td></tr>
+          <tr><td>55–64</td><td>5</td><td class="worst">S/5.23</td><td><span class="tag tag-warn">Caro</span></td></tr>
+          <tr><td>35–44</td><td>27</td><td class="worst">S/4.41</td><td><span class="tag tag-warn">Caro</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="panel cyber">
+    <div class="panel-title">Insights · CyberWow</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+      <div class="insight info"><strong>💡 HIFU fue la sorpresa del Cyber</strong>21 conversaciones con CPR muy bajo (S/1.43 en 45-54). El 50% de descuento del HIFU fue percibido como una oferta real — a repetir en campañas estacionales.</div>
+      <div class="insight good"><strong>✅ CTR más alto de todas las campañas (2.44%)</strong>El copy de Cyber con urgencia y descuentos específicos generó más clics. Confirma que las promociones temporales funcionan para esta audiencia.</div>
+      <div class="insight warn"><strong>⚠️ Demasiados creativos activos simultáneamente</strong>Más de 15 variantes de ads en una misma campaña fragmentaron el presupuesto. Muchos tuvieron $0 en conversiones. Menos creativos, más presupuesto por uno.</div>
+      <div class="insight note"><strong>💡 Jalupro no convirtió en Cyber</strong>0 conversaciones registradas para Jalupro a pesar de estar activo. El servicio necesita más educación del mercado antes de funcionar como ad de conversión.</div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== FINAL DE MES ===== -->
+<div class="section" id="tab-fin">
+  <div class="camp-header fin">
+    <div>
+      <div class="camp-name">Final de Mes · Abril 2026</div>
+      <div class="camp-sub">Mini Armonización 30% · Labios 25% · Baby Botox 20% · ADN Salmón 30%</div>
+    </div>
+    <div class="camp-badge">★ Mejor CPR</div>
+  </div>
+
+  <div class="kpi-row">
+    <div class="kpi highlight-green"><label>Conversaciones</label><div class="val">154</div><div class="sub">mensajes WA</div></div>
+    <div class="kpi good"><label>Costo/conv.</label><div class="val">S/2.08</div><div class="sub">mejor del mes</div></div>
+    <div class="kpi info"><label>Gasto total</label><div class="val">S/320</div><div class="sub">más eficiente</div></div>
+    <div class="kpi"><label>Impresiones</label><div class="val">30.9K</div><div class="sub">alcance</div></div>
+    <div class="kpi"><label>CTR</label><div class="val">2.93%</div><div class="sub">2do más alto</div></div>
+  </div>
+
+  <div class="grid-2">
+    <div class="panel fin">
+      <div class="panel-title">Conversaciones por anuncio</div>
+      <div class="bar-row">
+        <div class="bar-label">Mini Arm. A/D IMAGEN ★</div>
+        <div class="bar-track"><div class="bar-fill" style="width:100%;background:var(--green)"></div></div>
+        <div class="bar-val" style="color:var(--green)">~121</div>
+      </div>
+      <div class="bar-row">
+        <div class="bar-label">Labios A/D IMAGEN</div>
+        <div class="bar-track"><div class="bar-fill" style="width:19%;background:var(--rose)"></div></div>
+        <div class="bar-val" style="color:var(--rose)">~12</div>
+      </div>
+      <div class="bar-row">
+        <div class="bar-label">Baby Botox A/D</div>
+        <div class="bar-track"><div class="bar-fill" style="width:13%;background:var(--accent)"></div></div>
+        <div class="bar-val" style="color:var(--accent)">~9</div>
+      </div>
+      <div class="bar-row">
+        <div class="bar-label">Mini Arm. VIDEO</div>
+        <div class="bar-track"><div class="bar-fill" style="width:10%;background:var(--teal)"></div></div>
+        <div class="bar-val" style="color:var(--teal)">~6</div>
+      </div>
+      <div class="bar-row">
+        <div class="bar-label">ADN Salmón POST</div>
+        <div class="bar-track"><div class="bar-fill" style="width:6%;background:var(--purple)"></div></div>
+        <div class="bar-val" style="color:var(--purple)">~4</div>
+      </div>
+    </div>
+
+    <div class="panel fin">
+      <div class="panel-title">CPR por edad (mujeres)</div>
+      <table class="data-table">
+        <thead><tr><th>Edad</th><th>Conv.</th><th>CPR</th><th></th></tr></thead>
+        <tbody>
+          <tr><td>18–24</td><td>13</td><td class="best">S/2.13</td><td><span class="tag tag-best">Top</span></td></tr>
+          <tr><td>55–64</td><td>3</td><td class="best">S/2.43</td><td><span class="tag tag-best">Top</span></td></tr>
+          <tr><td>25–34</td><td>71</td><td>S/1.92</td><td><span class="tag tag-best">★ Mejor</span></td></tr>
+          <tr><td>35–44</td><td>43</td><td>S/2.20</td><td><span class="tag tag-neutral">Buena</span></td></tr>
+          <tr><td>45–54</td><td>13</td><td>S/2.96</td><td><span class="tag tag-neutral">Normal</span></td></tr>
+          <tr><td>65+</td><td>1</td><td>S/2.49</td><td><span class="tag tag-neutral">Poca data</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="panel fin">
+    <div class="panel-title">Insights · Final de Mes</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+      <div class="insight good"><strong>★ Un solo creativo dominó toda la campaña</strong>"Mini Armonización Antes/Después 30%" generó ~121 de las 154 conversaciones (79%) — con CPR de S/1.51 en 25-34. El antes/después es el formato que más convierte para armonización.</div>
+      <div class="insight good"><strong>✅ El 35–44 rindió bien aquí (S/2.20)</strong>Contrario a la Campaña Abril donde fue el rango más caro, en Final de Mes el 35-44 convirtió bien. Sugiere que el creativo antes/después resuena más con esta edad.</div>
+      <div class="insight note"><strong>💡 ADN de Salmón necesita más empuje</strong>Solo 4 conversaciones registradas. Es un servicio nuevo para el mercado — el ad de imagen sola no basta. Necesita un video educativo antes de funcionar como conversión directa.</div>
+      <div class="insight warn"><strong>⚠️ Baby Botox al 20% quedó opacado</strong>9 conversaciones vs 121 del mini armonización. Con el mismo presupuesto y descuento, el servicio no compite en atención. Considera un ad set separado para Baby Botox.</div>
+    </div>
+  </div>
+</div>
+
+<script>
+function showTab(id) {
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  document.getElementById('tab-' + id).classList.add('active');
+  const tabs = document.querySelectorAll('.tab');
+  const map = {overview:0, abril:1, cyber:2, fin:3};
+  tabs[map[id]].classList.add('active');
+}
+</script>
+</body>
+</html>
